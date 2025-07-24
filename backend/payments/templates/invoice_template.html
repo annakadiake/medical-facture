@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Facture {{ payment.invoice_number }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .clinic-info { width: 60%; }
+        .invoice-info { text-align: right; }
+        h1 { color: #2c3e50; font-size: 24px; margin-bottom: 5px; }
+        h2 { color: #3498db; font-size: 18px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background-color: #f8f9fa; text-align: left; padding: 8px; }
+        td { padding: 8px; border-bottom: 1px solid #eee; }
+        .total { font-weight: bold; font-size: 18px; }
+        .footer { margin-top: 50px; font-size: 12px; text-align: center; color: #7f8c8d; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="clinic-info">
+            <h1>{{ clinic_info.name }}</h1>
+            <p>{{ clinic_info.address }}</p>
+            <p>Téléphone: {{ clinic_info.phone }}</p>
+            <p>Email: {{ clinic_info.email }}</p>
+            <p>N° Identification fiscale: {{ clinic_info.tax_id }}</p>
+        </div>
+        <div class="invoice-info">
+            <h1>FACTURE</h1>
+            <p>N°: {{ payment.invoice_number }}</p>
+            <p>Date: {{ payment.payment_date|date:"d/m/Y" }}</p>
+        </div>
+    </div>
+
+    <div class="patient-info">
+        <h2>Patient</h2>
+        <p>{{ patient.first_name }} {{ patient.last_name }}</p>
+        <p>Date de naissance: {{ patient.birth_date|date:"d/m/Y" }}</p>
+        <p>Téléphone: {{ patient.phone_number }}</p>
+    </div>
+
+    <div class="examination-info">
+        <h2>Examen Médical</h2>
+        <table>
+            <tr>
+                <th>Type d'examen</th>
+                <th>Date</th>
+                <th>Prix</th>
+            </tr>
+            <tr>
+                <td>{{ examination.examination_type }}</td>
+                <td>{{ examination.examination_date|date:"d/m/Y" }}</td>
+                <td>{{ examination.price }} €</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="payment-info">
+        <h2>Paiement</h2>
+        <table>
+            <tr>
+                <th>Méthode de paiement</th>
+                <th>Montant payé</th>
+                <th>Date de paiement</th>
+            </tr>
+            <tr>
+                <td>{{ payment.get_payment_method_display }}</td>
+                <td>{{ payment.amount }} €</td>
+                <td>{{ payment.payment_date|date:"d/m/Y H:i" }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        <p>Merci pour votre confiance. Pour toute question, contactez-nous au {{ clinic_info.phone }}</p>
+        <p>Cette facture est générée automatiquement et ne nécessite pas de signature.</p>
+    </div>
+</body>
+</html>
